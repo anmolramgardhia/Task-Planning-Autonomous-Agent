@@ -1,1 +1,46 @@
+{
+  "agent_metadata": {
+    "agent_id": "task_planning_agent_v1",
+    "created_at": "",
+    "last_updated": ""
+  },
+
+  "goal": {
+    "description": "",
+    "start_date": "",
+    "target_end_date": ""
+  },
+
+  "tasks": [
+    {
+      "task_id": "",
+      "title": "",
+      "description": "",
+      "estimated_difficulty": 0.0,
+      "priority": 0,
+      "status": "pending",
+      "scheduled_date": "",
+      "completion_date": ""
+    }
+  ],
+
+  "progress": {
+    "tasks_completed": 0,
+    "tasks_pending": 0,
+    "completion_rate": 0.0
+  },
+
+  "feedback": [
+    {
+      "timestamp": "",
+      "comment": "",
+      "self_reported_difficulty": 0
+    }
+  ],
+
+  "ml_features": {
+    "historical_task_difficulties": [],
+    "completion_times": []
+  }
+}
 
