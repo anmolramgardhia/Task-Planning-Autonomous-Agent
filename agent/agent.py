@@ -5,6 +5,7 @@ This file defines the main agent loop and coordinates
 state loading, execution steps, and persistence.
 """
 
+from asyncio import tasks
 import json
 import time
 from pathlib import Path
@@ -53,8 +54,31 @@ class Agent:
     def act(self):
         print("[Agent] Acting on plan")
 
+        tasks = self.state.get("tasks", [])
+
+        for task in tasks:
+            if task["status"] == "pending":
+                task["status"] = "completed"
+                task["completion_date"] = time.strftime("%Y-%m-%d")
+                print(f"[Agent] Completed task: {task['title']}")
+                break
+
     def evaluate(self):
         print("[Agent] Evaluating progress")
+
+        tasks = self.state.get("tasks", [])
+        completed = sum(1 for t in tasks if t["status"] == "completed")
+        total = len(tasks)
+        self.state["progress"]["tasks_completed"] = completed
+        self.state["progress"]["tasks_pending"] = total - completed
+        self.state["progress"]["completion_rate"] = (
+            completed / total if total > 0 else 0.0
+        )
+        print(
+        f"[Agent] Progress: {completed}/{total} tasks completed"
+    )
+
+        
 
 
 
