@@ -28,6 +28,19 @@ class Agent:
         with open(self.state_path, "w") as f:
             json.dump(self.state, f, indent=2)
 
+    def update_state(self):
+        print("[Agent] Updating state")
+
+        if "agent_runtime" not in self.state:
+            self.state["agent_runtime"] = {"run_count": 0}
+
+        self.state["agent_runtime"]["run_count"] += 1
+
+        print(
+        f"[Agent] Run count updated to {self.state['agent_runtime']['run_count']}"
+    )
+
+
     # -----------------------------
     # Agent Loop Steps (STUBS)
     # -----------------------------
@@ -43,8 +56,7 @@ class Agent:
     def evaluate(self):
         print("[Agent] Evaluating progress")
 
-    def update_state(self):
-        print("[Agent] Updating state")
+
 
     # -----------------------------
     # Main Loop

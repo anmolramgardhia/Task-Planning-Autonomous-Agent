@@ -4,13 +4,14 @@
     "created_at": "",
     "last_updated": ""
   },
-
+  "agent_runtime": {
+    "run_count": 7
+  },
   "goal": {
     "description": "",
     "start_date": "",
     "target_end_date": ""
   },
-
   "tasks": [
     {
       "task_id": "",
@@ -23,13 +24,11 @@
       "completion_date": ""
     }
   ],
-
   "progress": {
     "tasks_completed": 0,
     "tasks_pending": 0,
     "completion_rate": 0.0
   },
-
   "feedback": [
     {
       "timestamp": "",
@@ -37,10 +36,8 @@
       "self_reported_difficulty": 0
     }
   ],
-
   "ml_features": {
     "historical_task_difficulties": [],
     "completion_times": []
   }
 }
-
