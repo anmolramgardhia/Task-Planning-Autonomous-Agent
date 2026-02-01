@@ -45,6 +45,11 @@ class Agent:
         print(
         f"[Agent] Run count updated to {self.state['agent_runtime']['run_count']}"
     )
+        
+    def is_overloaded(self):
+        pending = self.state["progress"]["tasks_pending"]
+        return pending > 5
+
 
 
     # -----------------------------
@@ -52,7 +57,7 @@ class Agent:
     # -----------------------------
     def observe(self):
         print("[Agent] Observing current state")
-        
+
 
     def plan(self):
         print("[Agent] Planning tasks")
@@ -105,8 +110,13 @@ class Agent:
         for step in range(iterations):
             print(f"\n[Agent] --- Iteration {step + 1} ---")
             self.observe()
+            
             self.plan()
-            self.act()
+            if self.is_overloaded():
+                print("[Agent] Overloaded — skipping task execution")
+            else:
+                self.act()
+
             self.evaluate()
             self.update_state()
             time.sleep(1)
