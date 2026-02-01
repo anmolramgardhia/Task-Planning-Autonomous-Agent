@@ -5,6 +5,8 @@ This file defines the main agent loop and coordinates
 state loading, execution steps, and persistence.
 """
 
+from agent import planner
+from agent.planner import Planner
 from asyncio import tasks
 import json
 import time
@@ -54,14 +56,15 @@ class Agent:
     def act(self):
         print("[Agent] Acting on plan")
 
-        tasks = self.state.get("tasks", [])
+        planner = Planner(self.state)
+        completed_task = planner.complete_next_task()
 
-        for task in tasks:
-            if task["status"] == "pending":
-                task["status"] = "completed"
-                task["completion_date"] = time.strftime("%Y-%m-%d")
-                print(f"[Agent] Completed task: {task['title']}")
-                break
+        if completed_task:
+         print(f"[Agent] Completed task: {completed_task['title']}")
+        else:
+         print("[Agent] No pending tasks to complete")
+
+         
 
     def evaluate(self):
         print("[Agent] Evaluating progress")
