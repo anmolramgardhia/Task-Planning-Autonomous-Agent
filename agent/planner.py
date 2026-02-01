@@ -12,21 +12,29 @@ class Planner:
     def __init__(self, state: dict):
         self.state = state
 
-    def complete_next_task(self):
-        tasks = self.state.get("tasks", [])
+    MAX_TASKS_PER_RUN = 2
 
-        pending_tasks = [t for t in tasks if t["status"] == "pending"]
 
-        if not pending_tasks:
-            return None
+def complete_tasks(self):
+    tasks = self.state.get("tasks", [])
+    pending_tasks = [t for t in tasks if t["status"] == "pending"]
 
-    # Select highest-priority task
-        task_to_complete = max(
-            pending_tasks, key=lambda t: t.get("priority", 0)
+    if not pending_tasks:
+        return []
+
+    # Sort pending tasks by priority (highest first)
+    pending_tasks.sort(
+        key=lambda t: t.get("priority", 0),
+        reverse=True
     )
 
-        task_to_complete["status"] = "completed"
-        task_to_complete["completion_date"] = time.strftime("%Y-%m-%d")
+    completed = []
 
-        return task_to_complete
+    for task in pending_tasks[:self.MAX_TASKS_PER_RUN]:
+        task["status"] = "completed"
+        task["completion_date"] = time.strftime("%Y-%m-%d")
+        completed.append(task)
+
+    return completed
+
 
