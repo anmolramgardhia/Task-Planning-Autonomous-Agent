@@ -13,17 +13,29 @@
     "target_end_date": ""
   },
   "tasks": [
-    {
-      "task_id": "",
-      "title": "",
-      "description": "",
-      "estimated_difficulty": 0.0,
-      "priority": 0,
-      "status": "completed",
-      "scheduled_date": "",
-      "completion_date": "2026-01-31"
-    }
-  ],
+  {
+    "task_id": "1",
+    "title": "Low priority task",
+    "description": "",
+    "estimated_difficulty": 1.0,
+    "priority": 1,
+    "status": "pending",
+    "scheduled_date": "",
+    "completion_date": ""
+  },
+  {
+    "task_id": "2",
+    "title": "High priority task",
+    "description": "",
+    "estimated_difficulty": 2.0,
+    "priority": 5,
+    "status": "pending",
+    "scheduled_date": "",
+    "completion_date": ""
+  }
+],
+
+  
   "progress": {
     "tasks_completed": 1,
     "tasks_pending": 0,
