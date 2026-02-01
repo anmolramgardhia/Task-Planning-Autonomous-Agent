@@ -5,6 +5,9 @@ This file defines the main agent loop and coordinates
 state loading, execution steps, and persistence.
 """
 
+from unittest import result
+from agent import evaluator
+from agent.evaluator import Evaluator
 from agent import planner
 from agent.planner import Planner
 from asyncio import tasks
@@ -64,21 +67,16 @@ class Agent:
         else:
          print("[Agent] No pending tasks to complete")
 
-         
+
 
     def evaluate(self):
         print("[Agent] Evaluating progress")
 
-        tasks = self.state.get("tasks", [])
-        completed = sum(1 for t in tasks if t["status"] == "completed")
-        total = len(tasks)
-        self.state["progress"]["tasks_completed"] = completed
-        self.state["progress"]["tasks_pending"] = total - completed
-        self.state["progress"]["completion_rate"] = (
-            completed / total if total > 0 else 0.0
-        )
+        evaluator = Evaluator(self.state)
+        result = evaluator.evaluate_progress()
+
         print(
-        f"[Agent] Progress: {completed}/{total} tasks completed"
+         f"[Agent] Progress: {result['completed']}/{result['total']} tasks completed"
     )
 
         
