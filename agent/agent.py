@@ -52,12 +52,25 @@ class Agent:
     # -----------------------------
     def observe(self):
         print("[Agent] Observing current state")
+        
 
     def plan(self):
         print("[Agent] Planning tasks")
 
+
     def act(self):
         print("[Agent] Acting on plan")
+
+        planner = Planner(self.state)
+        completed_tasks = planner.complete_tasks()
+
+        if completed_tasks:
+            for task in completed_tasks:
+                print(f"[Agent] Completed task: {task['title']}")
+        else:
+            print("[Agent] No pending tasks to complete")
+
+
 
         planner = Planner(self.state)
         completed_task = planner.complete_next_task()
