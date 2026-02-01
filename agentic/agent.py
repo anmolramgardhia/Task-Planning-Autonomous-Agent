@@ -4,12 +4,12 @@ Agent Controller for Task-Planning Autonomous Agent
 This file defines the main agent loop and coordinates
 state loading, execution steps, and persistence.
 """
-
+from .memory import Memory
 from unittest import result
 from agent import evaluator
-from agent.evaluator import Evaluator
+from .evaluator import Evaluator
 from agent import planner
-from agent.planner import Planner
+from .planner import Planner
 from asyncio import tasks
 import json
 import time
@@ -45,10 +45,32 @@ class Agent:
         print(
         f"[Agent] Run count updated to {self.state['agent_runtime']['run_count']}"
     )
-        
+
+    def average_difficulty(self):
+        feedback = self.state.get("feedback", [])
+        if not feedback:
+            return 0
+
+        return sum(
+        f["self_reported_difficulty"] for f in feedback
+    ) / len(feedback)
+
+
     def is_overloaded(self):
         pending = self.state["progress"]["tasks_pending"]
-        return pending > 5
+        avg_difficulty = self.average_difficulty()
+
+        return pending > 5 or avg_difficulty >= 4
+
+    
+    def record_feedback(self, difficulty: int, comment: str = ""):
+        feedback_entry = {
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "comment": comment,
+        "self_reported_difficulty": difficulty
+    }
+
+        self.state.setdefault("feedback", []).append(feedback_entry)
 
 
 
@@ -72,18 +94,15 @@ class Agent:
         if completed_tasks:
             for task in completed_tasks:
                 print(f"[Agent] Completed task: {task['title']}")
+
+        # Simulated user feedback (temporary)
+            self.record_feedback(
+            difficulty=4,
+            comment="Task felt challenging"
+        )
         else:
             print("[Agent] No pending tasks to complete")
 
-
-
-        planner = Planner(self.state)
-        completed_task = planner.complete_next_task()
-
-        if completed_task:
-         print(f"[Agent] Completed task: {completed_task['title']}")
-        else:
-         print("[Agent] No pending tasks to complete")
 
 
 
