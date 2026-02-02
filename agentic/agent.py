@@ -18,6 +18,7 @@ from agentic import planner
 
 class Agent:
     def __init__(self, state_path: str):
+        self.smoothed_difficulty = None
         self.state_path = Path(state_path)
         self.state = None
 
@@ -57,8 +58,22 @@ class Agent:
         f["self_reported_difficulty"] for f in feedback
     ) / len(feedback)
 
+    def update_smoothed_difficulty(self):
+        current = self.average_difficulty()
+
+        if self.smoothed_difficulty is None:
+            self.smoothed_difficulty = current
+        else:
+            self.smoothed_difficulty = (
+                0.7 * self.smoothed_difficulty + 0.3 * current
+            )
+
+        return self.smoothed_difficulty
+
+
     def max_tasks_for_run(self):
-        avg = self.average_difficulty()
+        avg = self.update_smoothed_difficulty()
+
 
         if avg >= 4.0:
             return 1
