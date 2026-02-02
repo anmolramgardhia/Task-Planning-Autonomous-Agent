@@ -13,6 +13,8 @@ import json
 import time
 from pathlib import Path
 
+from agentic import planner
+
 
 class Agent:
     def __init__(self, state_path: str):
@@ -43,6 +45,8 @@ class Agent:
         print(
         f"[Agent] Run count updated to {self.state['agent_runtime']['run_count']}"
     )
+        
+
 
     def average_difficulty(self):
         feedback = self.state.get("feedback", [])
@@ -52,6 +56,17 @@ class Agent:
         return sum(
         f["self_reported_difficulty"] for f in feedback
     ) / len(feedback)
+
+    def max_tasks_for_run(self):
+        avg = self.average_difficulty()
+
+        if avg >= 4.0:
+            return 1
+        elif avg >= 2.5:
+            return 2
+        else:
+            return 3
+
 
 
     def is_overloaded(self):
@@ -86,7 +101,10 @@ class Agent:
     def act(self):
         print("[Agent] Acting on plan")
 
-        planner = Planner(self.state)
+        max_tasks = self.max_tasks_for_run()
+        print(f"[Agent] Max tasks this run: {max_tasks}")
+
+        planner = Planner(self.state, max_tasks)
         completed_tasks = planner.complete_tasks()
 
         if completed_tasks:
@@ -95,11 +113,13 @@ class Agent:
 
         # Simulated user feedback (temporary)
             self.record_feedback(
-            difficulty=4,
-            comment="Task felt challenging"
-        )
+                difficulty=4,
+                comment="Task felt challenging"
+            )
         else:
             print("[Agent] No pending tasks to complete")
+
+
 
 
 
