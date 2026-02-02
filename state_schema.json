@@ -5,7 +5,7 @@
     "last_updated": ""
   },
   "agent_runtime": {
-    "run_count": 10
+    "run_count": 14
   },
   "goal": {
     "description": "",
@@ -15,27 +15,40 @@
   "tasks": [
     {
       "task_id": "1",
-      "title": "Low priority task",
+      "title": "Easy task",
       "description": "",
       "estimated_difficulty": 1.0,
       "priority": 1,
       "status": "completed",
       "scheduled_date": "",
-      "completion_date": "2026-02-02"
+      "completion_date": "",
+      "completed_at": 1770023803.699899
     },
     {
       "task_id": "2",
-      "title": "High priority task",
+      "title": "Medium task",
       "description": "",
       "estimated_difficulty": 2.0,
+      "priority": 3,
+      "status": "completed",
+      "scheduled_date": "",
+      "completion_date": "",
+      "completed_at": 1770023803.699898
+    },
+    {
+      "task_id": "3",
+      "title": "Hard task",
+      "description": "",
+      "estimated_difficulty": 4.0,
       "priority": 5,
       "status": "completed",
       "scheduled_date": "",
-      "completion_date": "2026-02-02"
+      "completion_date": "",
+      "completed_at": 1770023803.6998956
     }
   ],
   "progress": {
-    "tasks_completed": 2,
+    "tasks_completed": 3,
     "tasks_pending": 0,
     "completion_rate": 1.0
   },
@@ -47,6 +60,11 @@
     },
     {
       "timestamp": "2026-02-02 01:16:39",
+      "comment": "Task felt challenging",
+      "self_reported_difficulty": 4
+    },
+    {
+      "timestamp": "2026-02-02 14:46:43",
       "comment": "Task felt challenging",
       "self_reported_difficulty": 4
     }

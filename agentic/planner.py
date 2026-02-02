@@ -4,14 +4,16 @@ Planner module for Task-Planning Autonomous Agent
 Responsible for selecting and updating tasks based on simple rules.
 """
 
+from asyncio import tasks
 import time
 
-MAX_TASKS_PER_RUN = 2
+
 
 
 class Planner:
-    def __init__(self, state: dict):
+    def __init__(self, state: dict , max_tasks_per_run: int):
         self.state = state
+        self.max_tasks_per_run = max_tasks_per_run
 
     def complete_tasks(self):
         tasks = self.state.get("tasks", [])
@@ -26,13 +28,15 @@ class Planner:
         )
 
         completed = []
+        for task in pending_tasks[:self.max_tasks_per_run]:
 
-        for task in pending_tasks[:MAX_TASKS_PER_RUN]:
             task["status"] = "completed"
-            task["completion_date"] = time.strftime("%Y-%m-%d")
+            task["completed_at"] = time.time()
             completed.append(task)
 
         return completed
+
+    
 
 
 
